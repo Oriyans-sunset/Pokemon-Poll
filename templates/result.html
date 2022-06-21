@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div style="padding: 50px; margin: 50px; border-style:groove; border-color: black; overflow: hidden;">
+    <div class="jumbotron">
+        <h1 class="display-4">Thank you for your response!</h1>
+        <p class="lead">Below you can find summary stats for this poll.</p>
+        <hr class="my-4">
+    </div>
+    <div id="pie_chart" style="width: 410px; height: 350px; float: left;"></div>
+    <img src="{{ url_for("static", filename="dragonair-sitting.gif") }}" style="margin-top: 55px;">
+    <div id="bar_chart" style="width: 410px; height: 350px; float: right;"></div>   
+</div>
+{% endblock %}
+
+{% block postbody %}
+<script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+<script type="text/javascript">
+    //var graphs = {{ graphJSON | safe }};
+    //Plotly.newPlot("chart", graphs);
+
+    var pie_data = [{
+                type: "pie",
+                values: [{{ fire_votes }}, {{ water_votes }}, {{ grass_votes }}],
+                labels: ["Fire", "Water", "Grass"],
+                marker: {
+                        colors: [
+                            "rgb(244, 97, 97)",
+                            "rgb(117, 202, 252)",
+                            "rgb(153, 255, 132)"
+                            ]
+                        },
+                textinfo: "label+percent",
+                hoverinfo: "percent",
+                textposition: "outside",
+                automargin: true
+            }]
+    
+    var bar_data = [{
+            x: ["Fire", "Water", "Grass"],
+            y: [{{ fire_votes }}, {{ water_votes }}, {{ grass_votes }}],
+            marker: {
+                    color: [
+                        "rgb(244, 97, 97)",
+                        "rgb(117, 202, 252)",
+                        "rgb(153, 255, 132)"
+                        ],
+                    opacity: 0.6,
+                    line: {
+                        color: "#000000",
+                        width: 2
+                        }
+                    },
+            type: "bar"
+        }];
+
+    var pie_layout = {
+                margin: {"t": 0, "b": 0, "l": 0, "r": 0},
+                font:{
+                    family: "sans-serif"
+                },
+                showlegend: true,
+                paper_bgcolor:"rgba(0,0,0,0)"
+            }
+
+    var bar_layout = {
+        margin: {"t": 25, "b": 25, "l": 20, "r": 20},
+        font:{
+            family: "sans-serif"
+        },
+        showlegend: false,
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)"
+    }
+
+    Plotly.newPlot("pie_chart", pie_data, pie_layout);
+    Plotly.newPlot("bar_chart", bar_data, bar_layout);
+
+</script>
+{% endblock %}
