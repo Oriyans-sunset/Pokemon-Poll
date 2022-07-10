@@ -10,13 +10,19 @@
             <div class="card text-center" style="margin-right: 15px;">
               {% if poke_fire_img %}
                 <img src="{{ poke_fire_img }}" class="card-img-top" style="height: 300px;">
+
               {% else %}
                 <img src="{{ url_for("static", filename="a.jpeg") }}" class="card-img-top" style="height: 300px;">
+
               {% endif %}
+
               <div class="card-body" style="background-color: rgb(244, 97, 97);">
                 <h5 class="card-title"><b>FIRE Type</b></h5>
-                <p class="card-text">Fire is one of the three basic elemental types along with Water and Grass, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players. Fire types are notoriously rare in the early stages of the games so choosing the Fire variation starter is often a plus.</p>
+
+                <p class="card-text">Fire is one of the three basic elemental types along with Water and Grass, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players. 
+                  Fire types are notoriously rare in the early stages of the games so choosing the Fire variation starter is often a plus.</p>
                 <p class="card-text"><small class="text-muted"><a href="/update/fire" style="text-decoration: none;">Update Image</a></small></p>
+
                 <input class="form-check-input" type="radio" name="option" id="fire" value="fire">
               </div>
             </div>
@@ -24,13 +30,19 @@
             <div class="card text-center" style="margin-right: 15px;">
               {% if poke_water_img %}
                 <img src="{{ poke_water_img }}" class="card-img-top" style="height: 300px;">
+
               {% else %}
                 <img src="{{ url_for("static", filename="b.jpeg") }}" class="card-img-top" style="height: 300px;">
+
               {% endif %}
+
               <div class="card-body" style="background-color: rgb(117, 202, 252)";>
                 <h5 class="card-title"><b>WATER Type</b></h5>
-                <p class="card-text">Water is one of the three basic elemental types along with Fire and Grass, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players. Water is the most common type with over 100 Pokémon, which are based on a wide variety of sea-dwelling creatures.</p>
+
+                <p class="card-text">Water is one of the three basic elemental types along with Fire and Grass, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players. 
+                  Water is the most common type with over 100 Pokémon, which are based on a wide variety of sea-dwelling creatures.</p>
                 <p class="card-text"><small class="text-muted"><a href="/update/water" style="text-decoration: none;">Update Image</a></small></p>
+
                 <input class="form-check-input" type="radio" name="option" id="water" value="water">
               </div>
             </div>
@@ -38,13 +50,19 @@
             <div class="card text-center">
               {% if poke_grass_img %}
                 <img src="{{ poke_grass_img }}" class="card-img-top" style="height: 300px;">
+
               {% else %}
                 <img src="{{ url_for("static", filename="c.jpeg") }}" class="card-img-top" style="height: 300px;">
+
               {% endif %}
+
               <div class="card-body" style="background-color: rgb(153, 255, 132);">
                 <h5 class="card-title"><b>GRASS Type</b></h5>
-                <p class="card-text">Grass is one of the three basic elemental types along with Fire and Water, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players. Grass is one of the weakest types statistically, with 5 defensive weaknesses and 7 types that are resistant to Grass moves.</p>
+
+                <p class="card-text">Grass is one of the three basic elemental types along with Fire and Water, which constitute the three starter Pokémon. 
+                  This creates a simple triangle to explain the type concept easily to new players. Grass is one of the weakest types statistically, with 5 defensive weaknesses and 7 types that are resistant to Grass moves.</p>
                 <p class="card-text"><small class="text-muted"><a href="/update/grass" style="text-decoration: none;">Update Image</a></small></p>
+
                 <input class="form-check-input" type="radio" name="option" id="grass" value="grass">
               </div>
             </div>
@@ -54,5 +72,4 @@
         </div>
     </form>
 </div>
-<script src="{{url_for('static', filename='script.js')}}"></script>
 {% endblock %}

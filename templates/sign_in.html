@@ -3,26 +3,38 @@
 
 {% block body %}
 <div style="padding: 50px; margin: 50px; border-style:groove; border-color: black; overflow: hidden;">
-        <div class="jumbotron">
-            <h1 class="display-4">Hello, there!</h1>
-            <p class="lead">Welcome to Pokemon Poll. A fun website to settle the debate which Pokemon type is the best: <span style="color:rgb(239, 83, 83);"><b>fire</b></span>, <span style="color: rgb(43, 93, 123);"><b>water</b></span> or <span style="color:rgb(75, 155, 59);"><b>grass</b></span>.</p>
-            <hr class="my-4">
-            <p>Please sign up below to vote for your favourite Pokemon type, and see what others have voted.<br> If you're new to Pokemons feel free to read about them by clicking the link below.</p>
-            <a class="btn btn-primary" href="https://www.pokemon.com/us/" target="_blank" role="button">Learn more</a>
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, there!</h1>
+
+        <p class="lead">Welcome to Pokemon Poll. A fun website to settle the debate which Pokemon type is the best: 
+            <span style="color:rgb(239, 83, 83);"><b>fire</b></span>, 
+            <span style="color: rgb(43, 93, 123);"><b>water</b></span> or 
+            <span style="color:rgb(75, 155, 59);"><b>grass</b></span>.
+        </p>
+
+        <hr class="my-4">
+        <p>Please sign up below to vote for your favourite Pokemon type, and see what others have voted.
+            <br> If you're new to Pokemon feel free to read about them by clicking the link below.</p>
+
+        <a class="btn btn-primary" href="https://www.pokemon.com/us/" target="_blank" role="button">Learn more</a>
+    </div><br>
+
+    <form action="/sign_in" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
         </div><br>
-        <form action="/sign_in" method="post">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
-            </div><br>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email Address</label>
-                <input type="email" class="form-control" name="email"id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email" required>
-            </div><br>
-            <button type="submit" class="btn btn-danger">Submit</button>
-        </form>
-    <div style="margin-left: 20px; margin-top: 15px;">
-        <img src="{{ url_for("static", filename="pikachu-running.gif") }}" width="310" height="200" alt="">
+
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email Address</label>
+            <input type="email" class="form-control" name="email"id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email" required>
+        </div><br>
+
+        <button type="submit" class="btn btn-danger">Submit</button>
+    </form>
+
+    <div style="margin-left: 10px; margin-top: 15px;">
+        <img src="{{ url_for("static", filename="pikachu-running.gif") }}" width="310" height="200">
     </div>
 </div>
 {% endblock %}
