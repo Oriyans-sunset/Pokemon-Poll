@@ -1,9 +1,14 @@
 {% extends "base.html" %}
+{%  block title %}Results{% endblock %}
 
 {% block body %}
 <div style="padding: 50px; margin: 50px; border-style:groove; border-color: black; overflow: hidden;">
     <div class="jumbotron">
         <h1 class="display-4">Thank you for your response!</h1>
+        <div style="float: right;">
+            <a class="btn btn-warning" href="/delete-vote/{{ voter_id }}">DELETE VOTE</a>
+            <a class="btn btn-warning" href="/update-vote/{{ voter_id }}">UPDATE VOTE</a>
+        </div>
 
         <p class="lead">Below you can find summary stats for this poll.</p>
         
@@ -14,7 +19,7 @@
 
     <img src="{{ url_for("static", filename="dragonair-sitting.gif") }}" style="margin-top: 55px;">
 
-    <div id="bar_chart" style="width: 410px; height: 350px; float: right;"></div>   
+    <div id="bar_chart" style="width: 410px; height: 350px; float: right;"></div>
 </div>
 {% endblock %}
 

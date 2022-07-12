@@ -1,4 +1,6 @@
-from flask import Flask, redirect, render_template, request, url_for
+from crypt import methods
+from flask import Flask, redirect, render_template, request, url_for, session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from pkg_resources import require
@@ -10,6 +12,8 @@ import plotly.express as px
 app = Flask(__name__)
 db = SQLAlchemy(app)
 
+app.secret_key = "abc"
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -20,18 +24,22 @@ class Voters(db.Model):
     email = db.Column(db.String(100))
     voted_for = db.Column(db.String(10))
 
-@app.route("/sign_in", methods=["GET", "POST"])
-def sign_in():
+@app.route("/sign-in", methods=["GET"])
+def showSignInPage():
+    return render_template("sign_in.html")
 
-    #using global variables to provide access to the voting() func
-    global name, email
+@app.route("/sign-in", methods=["POST"])
+def showVotingPage():
+
+    #using sessions to provide access to the voting() func
     name = request.form.get("name")
     email = request.form.get("email")
 
+    session["name"] = name
+    session["email"] = email
+
     if (name and email):
         return render_template("voting.html")
-    else:
-        return render_template("sign_in.html")
 
 @app.route("/voting", methods=["GET", "POST"])
 def voting():
@@ -42,9 +50,15 @@ def voting():
 
     voted_for = request.form.get("option", False)
 
-    new_voter = Voters(name=name, email=email, voted_for=voted_for)
+    new_voter = Voters(name=session["name"], email=session["email"], voted_for=voted_for)
+
+    session.pop("name", None)
+    session.pop("email", None)
+
     db.session.add(new_voter)
     db.session.commit()
+
+    session["id"] = new_voter.id
 
     return redirect(url_for("result"))
 
@@ -89,7 +103,18 @@ def result():
     water_votes = len(db.session.query(Voters).filter(Voters.voted_for == "water").all())
     grass_votes = len(db.session.query(Voters).filter(Voters.voted_for == "grass").all())
 
-    return render_template("result.html", fire_votes=fire_votes, water_votes=water_votes, grass_votes=grass_votes)
+    return render_template("result.html", fire_votes=fire_votes, water_votes=water_votes, grass_votes=grass_votes, voter_id = session["id"])
+
+@app.route("/delete-vote/<int:id>", methods=["GET", "DELETE"])
+def delete_vote(id):
+    Voters.query.filter_by(id=id).delete()
+    db.session.commit()
+
+    return redirect(url_for("result"))
+
+@app.route("/update-vote/<int:id>", methods=["GET", "PUT"])
+def showUpdate_votePage(id):
+    return render_template("update_vote.html")
 
 if __name__ == "__main__":
     db.create_all()
