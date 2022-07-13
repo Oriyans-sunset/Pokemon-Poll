@@ -2,4 +2,19 @@
 {% block title %}Update Vote{% endblock %}
 
 {% block body %}
+    <div style="padding: 50px; margin: 50px; border-style:groove; border-color: black;" id="main_div">
+        <form method="POST" action="/update-vote/{{voter_id}}">
+            <span style="margin-right: 10px;">
+                <label for="type">Choose a type:</label>
+
+                <select name="type" id="type">
+                    <option value="fire">Fire🔥</option>
+                    <option value="water">Water💦</option>
+                    <option value="grass">Grass🌱</option>
+                </select>
+            </span>
+            
+            <button type="Submit" class="btn btn-primary">Change Vote</button>
+        </form>
+    </div>
 {% endblock %}

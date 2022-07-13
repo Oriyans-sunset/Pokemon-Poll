@@ -6,8 +6,8 @@
     <div class="jumbotron">
         <h1 class="display-4">Thank you for your response!</h1>
         <div style="float: right;">
-            <a class="btn btn-warning" href="/delete-vote/{{ voter_id }}">DELETE VOTE</a>
             <a class="btn btn-warning" href="/update-vote/{{ voter_id }}">UPDATE VOTE</a>
+            <a class="btn btn-danger" href="/delete-vote/{{ voter_id }}">DELETE VOTE</a>
         </div>
 
         <p class="lead">Below you can find summary stats for this poll.</p>
@@ -17,7 +17,9 @@
 
     <div id="pie_chart" style="width: 410px; height: 350px; float: left;"></div>
 
-    <img src="{{ url_for("static", filename="dragonair-sitting.gif") }}" style="margin-top: 55px;">
+    <a href="https://www.pokemon.com/us/pokedex/dragonair" target="_blank">
+        <img src="{{ url_for("static", filename="dragonair-sitting.gif") }}" style="margin-top: 55px;"> 
+    </a>
 
     <div id="bar_chart" style="width: 410px; height: 350px; float: right;"></div>
 </div>

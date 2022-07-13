@@ -1,4 +1,5 @@
 from crypt import methods
+from distutils.util import change_root
 from flask import Flask, redirect, render_template, request, url_for, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
@@ -38,8 +39,7 @@ def showVotingPage():
     session["name"] = name
     session["email"] = email
 
-    if (name and email):
-        return render_template("voting.html")
+    return render_template("voting.html")
 
 @app.route("/voting", methods=["GET", "POST"])
 def voting():
@@ -50,10 +50,10 @@ def voting():
 
     voted_for = request.form.get("option", False)
 
-    new_voter = Voters(name=session["name"], email=session["email"], voted_for=voted_for)
-
-    session.pop("name", None)
-    session.pop("email", None)
+    try:
+        new_voter = Voters(name=session["name"], email=session["email"], voted_for=voted_for)
+    except KeyError:
+        return redirect(url_for("/sign-in"))
 
     db.session.add(new_voter)
     db.session.commit()
@@ -112,9 +112,25 @@ def delete_vote(id):
 
     return redirect(url_for("result"))
 
-@app.route("/update-vote/<int:id>", methods=["GET", "PUT"])
+@app.route("/update-vote/<int:id>", methods=["GET"])
 def showUpdate_votePage(id):
-    return render_template("update_vote.html")
+    return render_template("update_vote.html", voter_id = session["id"])
+
+@app.route("/update-vote/<int:id>", methods=["POST", "PUT"])
+def updateVote(id):
+
+    #issue unresolved: when a vote is deleted, update vote funtion does work because the ID is also delted ong wiht the previous vote
+    changed_vote = request.form.get("type")
+
+    if (Voters.query.get(id)):
+        prev_vote = Voters.query.filter_by(id=id).update({Voters.voted_for: changed_vote}, synchronize_session = False)
+    else:
+        new_voter = Voters(name=session["name"], email=session["email"], voted_for=changed_vote)
+        db.session.add(new_voter)
+    
+    db.session.commit()
+
+    return redirect(url_for("result"))
 
 if __name__ == "__main__":
     db.create_all()
