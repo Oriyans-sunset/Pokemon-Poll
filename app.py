@@ -53,7 +53,7 @@ def voting():
     try:
         new_voter = Voters(name=session["name"], email=session["email"], voted_for=voted_for)
     except KeyError:
-        return redirect(url_for("/sign-in"))
+        return redirect(url_for("showSignInPage"))
 
     db.session.add(new_voter)
     db.session.commit()
